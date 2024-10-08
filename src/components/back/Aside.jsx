@@ -96,6 +96,16 @@ function Aside({ setActiveComponent, activeComponent }) {
                 <li className="nav-item">
                   <a
                     type='button'
+                    className={`nav-link ${activeComponent === "Doctorants" ? "active" : ""}`}
+                    onClick={() => setActiveComponent("Doctorants")}
+                  >
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Doctorants</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    type='button'
                     className={`nav-link ${activeComponent === "Livres" ? "active" : ""}`}
                     onClick={() => setActiveComponent("Livres")}
                   >

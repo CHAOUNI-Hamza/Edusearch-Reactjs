@@ -6,6 +6,7 @@ import Articles from "../../components/back/Articles";
 import Equipes from "../../components/back/Equipes";
 import Laboratoires from "../../components/back/Laboratoires";
 import Livres from "../../components/back/Livres";
+import Doctorants from "../../components/back/Doctorants";
 import Users from "../../components/back/Users";
 import Statistiques from "../../components/back/Statistiques";
 
@@ -20,6 +21,8 @@ function Dashboard({ handleLogout }) {
                 return <Statistiques />;
             case "Equipes":
                 return <Equipes />;
+            case "Doctorants":
+                return <Doctorants />;
             case "Laboratoires":
                 return <Laboratoires />;
             case "Livres":
