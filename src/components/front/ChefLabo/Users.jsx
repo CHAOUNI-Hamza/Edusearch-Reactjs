@@ -232,7 +232,7 @@ function Users({ onUserClick, onUserArtClick }) {
         
               </div>
               <div className='col-6'>
-              <select class="form-select" style={{ width: '50%' }} onChange={(e) => setSelectedEquipe(e.target.value)} value={selectedEquipe}>
+              <select className="form-select" style={{ width: '50%' }} onChange={(e) => setSelectedEquipe(e.target.value)} value={selectedEquipe}>
         <option value="">Tous les equipes</option>
         {equipes.map((equipe) => (
           <option key={equipe.id} value={equipe.id}>

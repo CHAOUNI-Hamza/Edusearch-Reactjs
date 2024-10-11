@@ -275,7 +275,7 @@ function Doctorants() {
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="date_inscription">تاريخ التسجيل </label>
-                  <input type="text" className="form-control" id="date_inscription" name="date_inscription" value={newUserData.date_inscription} onChange={handleNewUserDataChange} />
+                  <input type="date" className="form-control" id="date_inscription" name="date_inscription" value={newUserData.date_inscription} onChange={handleNewUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="nationalite">الجنسية </label>
@@ -283,7 +283,7 @@ function Doctorants() {
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="date_soutenance">تاريخ المناقشة </label>
-                  <input type="text" className="form-control" id="date_soutenance" name="date_soutenance" value={newUserData.date_soutenance} onChange={handleNewUserDataChange} />
+                  <input type="date" className="form-control" id="date_soutenance" name="date_soutenance" value={newUserData.date_soutenance} onChange={handleNewUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="sujet_these">الموضوع </label>
@@ -299,7 +299,7 @@ function Doctorants() {
                     onChange={handleNewUserDataChange}
                     required
                   >
-                    <option value="" disabled>اختر صاحب المقال</option>
+                    <option value="" disabled>اختر</option>
                     {UserInfos.map(user => (
         <option key={user.id} value={user.id}>{user.nom} {user.prénom}</option>
       ))}
@@ -330,35 +330,35 @@ function Doctorants() {
           <form>
           <div className="form-group text-right">
                   <label htmlFor="CIN">البطاقة الوطنية </label>
-                  <input type="text" className="form-control" id="CIN" name="CIN" value={newUserData.CIN} onChange={handleEditUserDataChange} />
+                  <input type="text" className="form-control" id="CIN" name="CIN" value={editUserData.CIN} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="APOGEE">رقم أبوجي </label>
-                  <input type="text" className="form-control" id="APOGEE" name="APOGEE" value={newUserData.APOGEE} onChange={handleEditUserDataChange} />
+                  <input type="text" className="form-control" id="APOGEE" name="APOGEE" value={editUserData.APOGEE} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="NOM">النسب </label>
-                  <input type="text" className="form-control" id="NOM" name="NOM" value={newUserData.NOM} onChange={handleEditUserDataChange} />
+                  <input type="text" className="form-control" id="NOM" name="NOM" value={editUserData.NOM} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="PRENOM">الإسم </label>
-                  <input type="text" className="form-control" id="PRENOM" name="PRENOM" value={newUserData.PRENOM} onChange={handleEditUserDataChange} />
+                  <input type="text" className="form-control" id="PRENOM" name="PRENOM" value={editUserData.PRENOM} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="date_inscription">تاريخ التسجيل </label>
-                  <input type="text" className="form-control" id="date_inscription" name="date_inscription" value={newUserData.date_inscription} onChange={handleEditUserDataChange} />
+                  <input type="date" className="form-control" id="date_inscription" name="date_inscription" value={editUserData.date_inscription} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="nationalite">الجنسية </label>
-                  <input type="text" className="form-control" id="nationalite" name="nationalite" value={newUserData.nationalite} onChange={handleEditUserDataChange} />
+                  <input type="text" className="form-control" id="nationalite" name="nationalite" value={editUserData.nationalite} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="date_soutenance">تاريخ المناقشة </label>
-                  <input type="text" className="form-control" id="date_soutenance" name="date_soutenance" value={newUserData.date_soutenance} onChange={handleEditUserDataChange} />
+                  <input type="date" className="form-control" id="date_soutenance" name="date_soutenance" value={editUserData.date_soutenance} onChange={handleEditUserDataChange} />
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="sujet_these">الموضوع </label>
-                  <input type="text" className="form-control" id="sujet_these" name="sujet_these" value={newUserData.sujet_these} onChange={handleEditUserDataChange} />
+                  <input type="text" className="form-control" id="sujet_these" name="sujet_these" value={editUserData.sujet_these} onChange={handleEditUserDataChange} />
                 </div>
 
                 <div className='form-group'>
