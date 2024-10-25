@@ -190,25 +190,6 @@ function Articles() {
     }
   };
 
-  const convertToCSV = (data) => {
-    const headers = ['العنوان', 'المجلة', 'الرابط', 'السنة', 'صاحب المقال'];
-    const rows = data.map(user => [
-      user.titre,
-      user.revue,
-      user.url,
-      user.annee,
-      `${user.user.nom} ${user.user.prénom}`
-    ]);
-  
-    let csvContent = 'data:text/csv;charset=utf-8,' + headers.join(',') + '\n';
-    rows.forEach(rowArray => {
-      let row = rowArray.join(',');
-      csvContent += row + '\n';
-    });
-  
-    return csvContent;
-  };
-
   const convertToExcel = (data) => {
   const ws = XLSX.utils.json_to_sheet(data.map(user => ({
     'العنوان': user.titre,
