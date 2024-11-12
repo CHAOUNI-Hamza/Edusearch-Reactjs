@@ -15,12 +15,27 @@ function Child1() {
     NOM: '',
     PRENOM: '',
     date_inscription: '',
-    nationalite: '',
+    nationalite: 'Marocain',
     date_soutenance: '',
     sujet_these: '',
     user_id: '',
   });
   const [editUserData, setEditUserData] = useState(null);
+
+  const nationalites = [
+    "Marocain", "Algérien", "Tunisien", "Français", "Espagnol", "Italien",
+    "Portugais", "Belge", "Suisse", "Américain", "Canadien", "Brésilien",
+    "Argentin", "Mexicain", "Allemand", "Néerlandais", "Suédois", "Norvégien",
+    "Danois", "Finlandais", "Autrichien", "Australien", "Néo-Zélandais",
+    "Sud-Africain", "Chinois", "Japonais", "Coréen", "Indien", "Pakistanais",
+    "Turc", "Égyptien", "Saoudien", "Emirati", "Qatari", "Libanais", "Syrien",
+    "Jordanien", "Palestinien", "Irakien", "Koweïtien", "Yéménite", "Omanien",
+    "Bahraini", "Iranien", "Afghan", "Bangladais", "Sri Lankais", "Malaisien",
+    "Singapourien", "Indonésien", "Vietnamien", "Philippin", "Thaïlandais",
+    "Russe", "Ukrainien", "Polonais", "Roumain", "Grec", "Tchèque", "Hongrois",
+    "Bulgares", "Serbe", "Croate", "Slovène", "Slovaque", "Bosniaque", "Monténégrin",
+    "Moldave", "Macédonien", "Albanais", "Arménien", "Géorgien", "Azerbaïdjanais"
+  ]
 
   const fetchData = async () => {
     setError(null);
@@ -65,7 +80,7 @@ function Child1() {
 
   const addUser = async () => {
     const { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, date_soutenance, sujet_these, user_id } = newUserData;
-    if (!CIN || !APOGEE || !NOM || !PRENOM || !date_inscription || !nationalite || !date_soutenance || !sujet_these || !user_id )
+    if (!CIN || !APOGEE || !NOM || !PRENOM || !date_inscription || !sujet_these || !user_id )
     {
       Swal.fire({
         icon: 'error',
@@ -83,7 +98,7 @@ function Child1() {
         NOM: '',
         PRENOM: '',
         date_inscription: '',
-        nationalite: '',
+        nationalite: 'Marocain',
         date_soutenance: '',
         sujet_these: '',
         user_id: '',
@@ -169,13 +184,14 @@ function Child1() {
 
   const convertToExcel = (data) => {
     const ws = XLSX.utils.json_to_sheet(data.map(user => ({
-      'الإسم و النسب': `${user.user.nom} ${user.user.prénom}`,
+      'الإسم و النسب': `${user.NOM} ${user.PRENOM}`,
       'البطاقة الوطنية': user.CIN,
       'رقم أبوجي': user.APOGEE,
       'الجنسية': user.nationalite,
       'تاريخ التسجيل': user.date_inscription,
       'تاريخ المناقشة': user.date_soutenance,
       'الموضوع': user.sujet_these,
+      'الأستاذ': `${user.user.nom} ${user.user.prénom}`,
     })));
   
     const wb = XLSX.utils.book_new();
@@ -352,7 +368,19 @@ function Child1() {
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="nationalite">الجنسية </label>
-                  <input type="text" className="form-control" id="nationalite" name="nationalite" value={newUserData.nationalite} onChange={handleNewDataChange} />
+                  <select
+        className="form-control"
+        id="nationalite"
+        name="nationalite"
+        value={newUserData.nationalite}
+        onChange={handleNewDataChange}
+      >
+        {nationalites.map((nationalite, index) => (
+          <option key={index} value={nationalite}>
+            {nationalite}
+          </option>
+        ))}
+      </select>
                 </div>
                 <div className="form-group text-right">
                   <label htmlFor="date_soutenance">تاريخ المناقشة </label>
