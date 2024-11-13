@@ -3,12 +3,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import '../../../css/users.css';
+
 function Child1() {
   const [doctorants, setDoctorants] = useState([]);
   const [UserInfos, setUserInfo] = useState([]);
   const [idUser, setIdUser] = useState('');
   const [error, setError] = useState(null);
-  const [selectedLaboratoire, setSelectedLaboratoire] = useState('');
   const [newUserData, setNewUserData] = useState({
     CIN: '',
     APOGEE: '',
@@ -36,37 +36,39 @@ function Child1() {
     "Bulgares", "Serbe", "Croate", "Slovène", "Slovaque", "Bosniaque", "Monténégrin",
     "Moldave", "Macédonien", "Albanais", "Arménien", "Géorgien", "Azerbaïdjanais"
   ]
-
-  const fetchData = async () => {
-    setError(null);
-    try {
-      const response = await axios.get('/doctorants', {
-        params: { 
-            id_prof: idUser, 
-        }
-      });
-      setDoctorants(response.data.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const [usersResponse, laboResponse, equipeResponse] = await Promise.all([
-          axios.get('/users'),
-        ]);
+        const usersResponse = await axios.get('/users');
         setUserInfo(usersResponse.data.data);
+        fetchDoctorants();
       } catch (error) {
-        console.error('There was an error fetching data!', error);
+        console.error('Error fetching user data:', error);
       }
     };
-
     fetchInitialData();
-    fetchData();
   }, []);
-  
+
+  const fetchDoctorants = async (id = '') => {
+    try {
+      const response = await axios.get('/admin/professor/doctorants', { params: { prof_id: id } });
+      setDoctorants(response.data.data);
+      setError(null);
+    } catch (error) {
+      console.error('Error fetching doctorants:', error);
+      setError('حدث خطأ أثناء جلب البيانات.');
+    }
+  };
+
+  const handleSelectChange = (event) => {
+    setIdUser(event.target.value);
+    fetchDoctorants(event.target.value);
+  };
+
+  const clearFilters = () => {
+    setIdUser('');
+    fetchDoctorants();
+  };
 
   const handleNewDataChange = (e) => {
     const { name, value } = e.target;
@@ -91,7 +93,6 @@ function Child1() {
     }
     try {
       await axios.post('/admin/doctorants', { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, date_soutenance, sujet_these, user_id });
-      fetchData();
       setNewUserData({
         CIN: '',
         APOGEE: '',
@@ -123,13 +124,10 @@ function Child1() {
       }
     }
   };
-  
-
   const editUser = async () => {
     try {
       const { id, CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, date_soutenance, sujet_these, user_id } = editUserData;
       await axios.put(`/admin/doctorants/${id}`, { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, date_soutenance, sujet_these, user_id });
-      fetchData();
       Swal.fire({
         title: "تم",
         text: "تم تحديث المعلومات بنجاح.",
@@ -150,7 +148,6 @@ function Child1() {
           }
     }
   };
-
   const deleteUser = async (id) => {
     try {
       const result = await Swal.fire({
@@ -165,7 +162,6 @@ function Child1() {
 
       if (result.isConfirmed) {
         await axios.delete(`/doctorants/${id}`);
-        fetchData();
         Swal.fire({
           title: "تم الحذف!",
           text: "تم الحذف بنجاح.",
@@ -177,11 +173,9 @@ function Child1() {
       setError('حدث خطأ أثناء الحذف .');
     }
   };
-
   const openEditModal = (user) => {
     setEditUserData(user);
   };
-
   const convertToExcel = (data) => {
     const ws = XLSX.utils.json_to_sheet(data.map(user => ({
       'الإسم و النسب': `${user.NOM} ${user.PRENOM}`,
@@ -196,18 +190,12 @@ function Child1() {
   
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Doctorants');
-  
     return wb;
   };
 
   const downloadExcel = () => {
     const wb = convertToExcel(doctorants);
     XLSX.writeFile(wb, 'users.xlsx');
-  };
-
-  const clearFilters = () => {
-    setIdUser('');
-    fetchData();
   };
 
   return (
@@ -233,7 +221,7 @@ function Child1() {
                 className="form-select"
                 style={{ width: '30%' }}
                 value={idUser}
-                onChange={(e) => setIdUser(e.target.value)}
+                onChange={handleSelectChange}
               >
                 <option value="">اختيار الأستاذ</option>
                 {UserInfos.map(prof => (
@@ -247,8 +235,6 @@ function Child1() {
               >
                 افرغ
               </button>
-
-
               <button
   type="button"
   className="btn btn-success"
@@ -260,9 +246,6 @@ function Child1() {
 </svg>
   تحميل
 </button>
-
-
-
           </div>
           </div>
           <div className="card-body table-responsive p-0">
