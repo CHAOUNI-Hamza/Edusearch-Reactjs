@@ -293,7 +293,7 @@ function Users() {
                         href="#"
                         style={{ color: '#ff0000b3', marginRight: '10px' }}
                         aria-label="Delete"
-                        onClick={() => deleteUser(user.id)}
+                        onClick={() => deleteUser(user.id)} 
                       >
                         <i className="fa fa-trash" aria-hidden="true"></i>
                       </a>
