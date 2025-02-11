@@ -40,7 +40,7 @@ function Child1() {
     const fetchInitialData = async () => {
       try {
         const usersResponse = await axios.get('/users');
-        setUserInfo(usersResponse.data.data);
+        setUserInfo(usersResponse.data.data); 
         fetchDoctorants();
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -81,7 +81,7 @@ function Child1() {
   };
 
   const addUser = async () => {
-    const { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, date_soutenance, sujet_these, user_id } = newUserData;
+    const { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, sujet_these, user_id } = newUserData;
     if (!CIN || !APOGEE || !NOM || !PRENOM || !date_inscription || !sujet_these || !user_id )
     {
       Swal.fire({
@@ -92,7 +92,7 @@ function Child1() {
       return;
     }
     try {
-      await axios.post('/admin/doctorants', { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, date_soutenance, sujet_these, user_id });
+      await axios.post('/admin/doctorants', { CIN, APOGEE, NOM, PRENOM, date_inscription, nationalite, sujet_these, user_id });
       setNewUserData({
         CIN: '',
         APOGEE: '',
@@ -111,6 +111,7 @@ function Child1() {
       }).then(() => {
         document.getElementById('closeModalBtn').click();
       });
+      fetchDoctorants();
     } catch (error) {
       if (error.response && error.response.data.errorDate) {
         Swal.fire({
@@ -135,6 +136,7 @@ function Child1() {
       }).then(() => {
         document.getElementById('closeEditModalBtn').click();
       });
+      fetchDoctorants();
     } catch (error) {
         if (error.response && error.response.data.errorDate) {
             Swal.fire({
@@ -159,6 +161,8 @@ function Child1() {
         cancelButtonColor: "#d33",
         confirmButtonText: "نعم، احذفها!"
       });
+
+      fetchDoctorants();
 
       if (result.isConfirmed) {
         await axios.delete(`/doctorants/${id}`);
@@ -225,7 +229,7 @@ function Child1() {
               >
                 <option value="">اختيار الأستاذ</option>
                 {UserInfos.map(prof => (
-                  <option key={prof.id} value={prof.id}>{prof.nom}</option>
+                  <option key={prof.id} value={prof.id}>{prof.nom} {prof.prénom}</option>
                 ))}
               </select>
             <button
